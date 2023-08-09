@@ -68,7 +68,7 @@ The primary objective of this integration is to eliminate the need for navigatin
   <li>Customize environment variables like CF_PAGES_WORKFLOW_BASE_URL and CYPRESS_WORKFLOW_BASE_URL.</li>
 </ul>
 
-<h4>Customization</h4>
+<h3>Customization</h3>
 <p>This automation framework's adaptability extends beyond the initial comment creation. The versatile architecture can be easily customized for various use cases. You can modify the provided scripts, adapt workflows, and configure environment variables to match your project's unique needs.</p>
 
 <h3>Contributing</h3>
