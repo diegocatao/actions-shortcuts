@@ -1,0 +1,52 @@
+# Workflow name
+name: PR - Shortcuts
+
+# Concurrency settings
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }} # Group workflow runs by workflow and head reference
+  cancel-in-progress: true # Cancel previous runs of the same workflow if a new one is started
+
+# Workflow triggers
+on:
+  workflow_dispatch: # Manual triggering
+  pull_request: # Trigger on pull request events
+    types:
+      - "opened" # Trigger only when a pull request is opened
+
+# Environment variables
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Access token for GitHub API
+  COMMIT_INFO_SHA: ${{ github.sha }} # SHA of the commit triggering the workflow
+
+# Job definition
+jobs:
+  main:
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu as the runner
+
+    steps: # List of steps in the job
+      - name: Checkout
+        uses: actions/checkout@v2 # Check out the repository
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8 # Set up Python 3.8
+
+      - name: Generate Shortcuts Body
+        run: |
+          python .github/workflows/pull-request-shortcuts.py # Run the Python script
+        env:
+          CF_PAGES_WORKFLOW_BASE_URL: "https://WORKER_EXAMPLE_1.example.workers.dev" # Set environment variables for the script
+          CYPRESS_WORKFLOW_BASE_URL: "https://WORKER_EXAMPLE_2.example.workers.dev"
+          REPO_NAME: ${{ github.repository }} # Use repository name from GitHub context
+          PR_NUMBER: ${{ github.event.pull_request.number }} # Use pull request number from GitHub context
+
+      - name: Read Generated Content
+        id: read_content
+        run: echo "::set-output name=content::$(cat shortcuts-body.html)" # Read content from generated file and set it as an output
+
+      - name: Post Comment to GitHub PR
+        uses: peter-evans/create-or-update-comment@v2 # Action that will init the actions shortcut comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }} # Specify the issue (PR) number
+          body: ${{ steps.read_content.outputs.content }} # Use the content generated earlier as the comment body
