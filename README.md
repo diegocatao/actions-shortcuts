@@ -2,11 +2,13 @@
   
 <h1>Actions Shortcut</h1>
 
-| <img width="836" alt="image" src="https://github.com/diegocatao/actions-shortcut/assets/96078654/a13cb43a-3450-4973-bf81-a52fb82edeff"> |
+| <img width="827" alt="image" src="https://github.com/diegocatao/actions-shortcuts/assets/96078654/d07cb792-9229-4f7f-ab90-a8aa6ff94903"> |
 |:--:| 
 | *Pull Request comment that includes interactive actions shortcuts that enable users to effortlessly execute specific workflows.* |
 
 </div>
+
+</br>
 
 <p>This repository provides a versatile Cloudflare Worker script and GitHub Actions workflows designed to streamline various automation tasks within GitHub repositories. The Cloudflare Worker script can trigger Cypress workflows and Cloudflare Pages deployments, <b>but its adaptability allows it to be used for a wide range of scenarios, which means: feel free to integrate per your needs.</b>
 
